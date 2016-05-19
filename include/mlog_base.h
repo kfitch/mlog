@@ -47,8 +47,24 @@ do {\
 #define MLOG_VALUE_(t, m, v)        MLOG_VALUE__(t, m, v)
 
 #define MLOG__(t, m)\
+
+/* By defining LOG_SECTION at compile time (E.g. via some thing like
+   -DLOG_SECTION=dont_output  on the GCC command line) you can put all the 
+   symbols created for logging in a single section. With appropriate
+   manipulation of the final link command or link scripts that section can be
+   left out of the final executable image, resulting in zero bytes per log
+   message! */
+#ifdef LOG_SECTION
+/* I assume different compilers do this different ways, for now just do it
+   the GCC way. */
+# define SECTION  __attribute__ ((section ( #LOG_SECTION )))
+#else
+# define SECTION
+#endif
+
+
 do {\
-    static const volatile mlog_uint8_t MLOG_##t##_##m##___ = 0;\
+    static const volatile mlog_uint8_t MLOG_##t##_##m##___ SECTION = 0;\
     mlog_log(&MLOG_##t##_##m##___);\
 } while (0)
 #define MLOG_VALUE__(t, m, v)\
