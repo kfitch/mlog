@@ -69,7 +69,7 @@ do {\
 } while (0)
 #define MLOG_VALUE__(t, m, v)\
 do {\
-    static const volatile mlog_uint8_t MLOG_##t##_##m##___ = 0;\
+    static const volatile mlog_uint8_t MLOG_##t##_##m##___ MLOG_SECTION_ = 0;\
     mlog_log_value(&MLOG_##t##_##m##___, v);\
 } while (0)
 

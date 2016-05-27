@@ -11,5 +11,5 @@ $(TARGET): $(TARGET).cpp mlog_server.cpp ../src/mlog.c
 
 .PHONY :  clean
 clean:
-	rm -rf *.o $(TARGET) $(TARGET).exe $(TARGET).mlogmap
+	rm -rf *.o $(TARGET) $(TARGET).exe $(TARGET).mlogmap $(TARGET).filtered
 
