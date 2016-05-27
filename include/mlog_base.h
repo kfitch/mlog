@@ -35,19 +35,6 @@ do {\
     if (!e) { MLOG_ERROR(ENSURE_##m); }\
 } while (0)
 
-/* Just implementation details below. */
-
-#define MLOGMLOG_WITH_TAG_(m)        MLOG_(MLOG_TAG, m)
-#define MLOG_VALUE_WITH_TAG_(m, v)   MLOG_VALUE_(MLOG_TAG, m, v)
-    
-#define MLOG_(t, m)                 MLOG__(t, m)
-#define MLOG_VALUE_(t, m, v)        MLOG_VALUE__(t, m, v)
-
-#define MLOG_(t, m)                 MLOG__(t, m)
-#define MLOG_VALUE_(t, m, v)        MLOG_VALUE__(t, m, v)
-
-#define MLOG__(t, m)\
-
 /* By defining LOG_SECTION at compile time (E.g. via some thing like
    -DLOG_SECTION=dont_output  on the GCC command line) you can put all the 
    symbols created for logging in a single section. With appropriate
@@ -62,7 +49,18 @@ do {\
 # define SECTION
 #endif
 
+/* Just implementation details below. */
 
+#define MLOGMLOG_WITH_TAG_(m)        MLOG_(MLOG_TAG, m)
+#define MLOG_VALUE_WITH_TAG_(m, v)   MLOG_VALUE_(MLOG_TAG, m, v)
+
+#define MLOG_(t, m)                 MLOG__(t, m)
+#define MLOG_VALUE_(t, m, v)        MLOG_VALUE__(t, m, v)
+
+#define MLOG_(t, m)                 MLOG__(t, m)
+#define MLOG_VALUE_(t, m, v)        MLOG_VALUE__(t, m, v)
+
+#define MLOG__(t, m)\
 do {\
     static const volatile mlog_uint8_t MLOG_##t##_##m##___ SECTION = 0;\
     mlog_log(&MLOG_##t##_##m##___);\
