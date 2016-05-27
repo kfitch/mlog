@@ -35,18 +35,18 @@ do {\
     if (!e) { MLOG_ERROR(ENSURE_##m); }\
 } while (0)
 
-/* By defining LOG_SECTION at compile time (E.g. via some thing like
-   -DLOG_SECTION=dont_output  on the GCC command line) you can put all the 
+/* By defining MLOG_SECTION at compile time (E.g. via some thing like
+   -DMLOG_SECTION=dont_output  on the GCC command line) you can put all the
    symbols created for logging in a single section. With appropriate
    manipulation of the final link command or link scripts that section can be
    left out of the final executable image, resulting in zero bytes per log
-   message! */
-#ifdef LOG_SECTION
+   message. */
+#ifdef MLOG_SECTION
 /* I assume different compilers do this different ways, for now just do it
    the GCC way. */
-# define SECTION  __attribute__ ((section ( #LOG_SECTION )))
+# define MLOG_SECTION_  __attribute__ ((section ( #MLOG_SECTION )))
 #else
-# define SECTION
+# define MLOG_SECTION_
 #endif
 
 /* Just implementation details below. */
@@ -62,7 +62,7 @@ do {\
 
 #define MLOG__(t, m)\
 do {\
-    static const volatile mlog_uint8_t MLOG_##t##_##m##___ SECTION = 0;\
+    static const volatile mlog_uint8_t MLOG_##t##_##m##___ MLOG_SECTION_ = 0;\
     mlog_log(&MLOG_##t##_##m##___);\
 } while (0)
 #define MLOG_VALUE__(t, m, v)\
