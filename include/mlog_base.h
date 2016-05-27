@@ -42,9 +42,11 @@ do {\
    left out of the final executable image, resulting in zero bytes per log
    message. */
 #ifdef MLOG_SECTION
+# define MLOG_STR_X_(s) #s
+# define MLOG_STR_(s) MLOG_STR_X_(s)
 /* I assume different compilers do this different ways, for now just do it
    the GCC way. */
-# define MLOG_SECTION_  __attribute__ ((section ( #MLOG_SECTION )))
+# define MLOG_SECTION_  __attribute__ (( section ( MLOG_STR_(MLOG_SECTION) ) ))
 #else
 # define MLOG_SECTION_
 #endif
